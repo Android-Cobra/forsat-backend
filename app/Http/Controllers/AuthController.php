@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller {
 
+    public function test() {
+        return "Test success";
+    }
+
     public function authFailed() {
         return response('Unauthenticated request', 401);
     }
@@ -48,6 +52,8 @@ class AuthController extends Controller {
         if (Auth::attempt($credentials)) {
             $user = $request->user();
             return $this->getResponse($user);
+        }else {
+            return response("Invalid credentials");
         }
     }
 

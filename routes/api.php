@@ -29,11 +29,13 @@ Route::prefix('auth') ->group(function (){
     Route::get('authentication-failed', '\App\Http\Controllers\AuthController@authFailed')->name('auth-failed');//If auth failed that will be redirected to this route
 });
 
+Route::get('test', '\App\Http\Controllers\AuthController@test');
+
 //Route::get('opportunities','\App\Http\Controllers\OpportunityController@index');
 //Route::get('opportunity/{opportunity}','\App\Http\Controllers\OpportunityController@show');// {opportunity} this name should be the same as the param of show()-method
 
 //Route resource: For a particular controller it routes all its methods like index(), show() and update() etc.
-Route::resource('opportunity', '\App\Http\Controllers\OpportunityController')->middleware('auth:api');
+//Route::resource('opportunity', '\App\Http\Controllers\OpportunityController')->middleware('auth:api');
 //Route::resource('category', '\App\Http\Controllers\CategoryController');
 
 
@@ -42,6 +44,23 @@ Route::group(['prefix' => 'lookups', 'middleware' => 'auth:api'], function (){//
     Route::resource('category', '\App\Http\Controllers\CategoryController');
     Route::resource('country', '\App\Http\Controllers\CountryController');
 });
+
+Route::group(['middleware' => 'auth:api'], function () {
+    //Route resource: For a particular controller it routes all its methods like index(), show() and update() etc.
+    Route::resource('opportunity', '\App\Http\Controllers\OpportunityController') ;
+
+    // Questions
+    Route::get('questions','\App\Http\Controllers\QuestionController@index');
+    Route::post('question','\App\Http\Controllers\QuestionController@store');
+    Route::put('question/{question}','\App\Http\Controllers\QuestionController@update');
+
+    // Favorites
+    Route::get('favorites','\App\Http\Controllers\FavoriteController@index');
+    Route::post('favorite','\App\Http\Controllers\FavoriteController@store');
+    Route::put('favorite/{favorite}','\App\Http\Controllers\FavoriteController@update');
+
+});
+
 
 //Route::get('test','\App\Http\Controllers\CategoryController@test')->name('test');
 

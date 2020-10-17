@@ -9,6 +9,11 @@ class OpportunityDetail extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
     public function opportunity() {
         //as Opportunity_id is foreign key in the OpportunityDetail table
         return $this->belongsTo(Opportunity::class );
